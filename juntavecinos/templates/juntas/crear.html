@@ -1,0 +1,21 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Agregar nueva noticia {% endblock %}
+
+{% block contenido %} 
+<br>
+
+<div class="card">
+    <div class="card-header">
+        Publicacion de noticia
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de la noticia</h4>
+        
+        {% include 'juntas/form.html' %}
+
+    </div>
+
+</div>
+
+{% endblock %}

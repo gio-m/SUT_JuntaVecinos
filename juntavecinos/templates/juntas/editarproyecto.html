@@ -1,0 +1,21 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Editar proyecto {% endblock %}
+
+{% block contenido %} 
+<br>
+
+<div class="card">
+    <div class="card-header">
+        Editar proyecto
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del proyecto</h4>
+        
+        {% include 'juntas/formularioproyecto.html' %}
+
+    </div>
+
+</div>
+
+{% endblock %}

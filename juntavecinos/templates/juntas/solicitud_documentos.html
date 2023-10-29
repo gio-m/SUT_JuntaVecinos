@@ -1,0 +1,20 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Solicita tu documentación {% endblock %}
+
+{% block contenido %} 
+
+<html>
+<head>
+    
+</head>
+<body>
+    <h1>Solicitud de Documentos</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar Solicitud</button>
+    </form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Lista de vecinos {% endblock %}
+
+{% block contenido %} 
+<br>
+<div class="card">
+    <a name="" id="" class="btn btn-primary" href="{% url 'crear' %}" role="">Agregar usuario</a>
+    <div class="card-header">
+        Listar juntas de vecinos
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Juntas de Vecinos</h4>
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Titulo </th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                {% for noticia in noticias %}
+                    <tr class="">
+                        <td>{{ noticia.id }}</td>
+                        <td>{{ noticia.Titulo }}</td>
+                        <td>{{ noticia.Descripcion }}</td>
+                        <td> <img src="{{ noticia.Imagen.url}}" height="100"/>
+                            
+                        </td>
+                        <td><a name="" id="" class="btn btn-info" href="{% url 'noticias' %}" role="button">Editar</a> | 
+                            <a name="" id="" class="btn btn-danger" href="#" role="button">Borrar</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+
+
+
+        <p class="card-text">Text</p>
+    </div>
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Editar actividad {% endblock %}
+
+{% block contenido %} 
+<br>
+
+<div class="card">
+    <div class="card-header">
+        Editar actividad
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de la actividad</h4>
+        
+        {% include 'juntas/formularioactividad.html' %}
+
+    </div>
+
+</div>
+
+{% endblock %}

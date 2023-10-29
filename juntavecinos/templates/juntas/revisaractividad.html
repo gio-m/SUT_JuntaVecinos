@@ -1,0 +1,57 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Lista de actividades {% endblock %}
+
+{% block contenido %} 
+<br>
+<div class="card">
+    <div class="card-header">
+        Listado de las actividades por publicar
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Actividades</h4>
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tipo Actividad </th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Fecha de la actividad</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                {% for actividad in actividades %}
+                    <tr class="">
+                        <td>{{ actividad.id }}</td>
+                        <td>{{ actividad.TipoSolicitud }}</td>
+                        <td>{{ actividad.Descripcion }}</td>
+                        <td> <img src="{{ actividad.Imagen.url}}" height="100"/></td>
+                        <td>{{ actividad.fecha_actividad }}</td>
+
+                            
+                        <td><a name="" id="" class="btn btn-info" href="{% url 'editaractividad' actividad.id %}" role="button">Editar</a> | 
+                            <a name="" id="" class="btn btn-danger" href="{% url 'eliminaractividad' actividad.id %}" role="button">Borrar</a></td>
+                        
+                           
+                    </tr>
+                    
+                      
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a class="btn btn-success" href="{% url 'actividades' %}" role="button">Crear actividad</a>
+        <a class="btn btn-primary" href="{% url 'inicio' %}" role="button">Atras</a>
+        
+
+
+
+        
+    </div>
+   
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}   
+
+{% block titulo %} Agregar nueva actividad {% endblock %}
+
+{% block contenido %} 
+<br>
+<div class="card">
+    <div class="card-header">
+        Publicacion de proyecto
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Proyecto</h4>
+        
+        {% include 'juntas/formularioproyecto.html' %}
+
+    </div>
+
+</div>
+
+{% endblock %}
