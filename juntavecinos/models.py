@@ -2,6 +2,23 @@ from django.db import models
 from django.forms import PasswordInput
 
 # Create your models here.
+class TiposPerfil(models.Model):
+    Tipo_Perfil_ID = models.AutoField(primary_key=True)
+    Nombre_Perfil = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.Nombre_Perfil
+    
+class JuntaVecinos(models.Model):
+    Junta_Vecinos_ID = models.AutoField(primary_key=True)
+    Nombre_Administrador = models.CharField(max_length=100)
+    Ciudad = models.CharField(max_length=50)
+    Localidad = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.Nombre_Administrador
+
+
 class Vecinos(models.Model):
     rut = models.CharField(primary_key=True,max_length=15,verbose_name="Rut")
     nombre = models.CharField(max_length=100,verbose_name="Nombre")
@@ -13,14 +30,27 @@ class Vecinos(models.Model):
     certificado = models.ImageField(upload_to='images/certificados/',verbose_name="Certificado de residencia")
     
     
+
+    
     def __str__(self):
         fila = "Rut: " + self.rut + '-' +"Nombre: " + self.nombre + '-' +"Apellido: " + self.apellido + '-' +"Dirección: " + self.direccion + '-' +"Correo: " + self.correo + '-' +"Fecha de nacimiento: " + self.fecha_nacimiento + '-' +"Contraseña: " + self.password
+        
         return fila
     def delete(self, using=None,keep_parents=False):
         self.certificado.storage.delete(self.certificado.name)
         super().delete();
 
 
+class Certificados(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Vecino_RUT = models.ForeignKey(Vecinos, on_delete=models.CASCADE)
+    FechaSolicitud = models.DateField()
+    Aprobado = models.BooleanField()
+
+    def __str__(self):
+        return f"Certificado para {self.Vecino_RUT.Nombre} {self.Vecino_RUT.Apellido}"
+    
+    
 ##Formato de base de datos para las noticias
 class Noticias(models.Model):
     id = models.AutoField(primary_key=True)
@@ -96,5 +126,25 @@ class Documentos(models.Model):
         self.Archivo.storage.delete(self.Archivo.name)
         super().delete()
 
+class Reuniones(models.Model):
+    Reuniones_id = models.AutoField(primary_key=True)
+    Fecha = models.DateField()
+    Lugar = models.CharField(max_length=100)
+    Asunto = models.CharField(max_length=100)
+    Descripcion_reuniones = models.TextField(max_length=500)
+    Proyecto_id = models.ForeignKey(Proyectos, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.Asunto
+    
 
+class Notificaciones(models.Model):
+    Notificaciones_id = models.AutoField(primary_key=True)
+    Titulo_notificaciones = models.CharField(max_length=100)
+    Contenido = models.CharField(max_length=100)
+    FechaEnvio = models.DateTimeField()
+    Tipo_notificaciones = models.CharField(max_length=20)
+    Destinatario = models.ForeignKey('Vecinos', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.Titulo_notificaciones

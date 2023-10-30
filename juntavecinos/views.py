@@ -3,6 +3,8 @@ from django.views.generic import CreateView,DeleteView
 from django.http import HttpResponse
 from .models import Vecinos,Noticias,Propuesta,Proyectos,Actividades,Documentos
 from .forms import NoticiasForm, ActividadesForm, ProyectosForm, PropuestaForm, VecinosForm, DocumentosForm
+from .forms import CustomUserCreationForm
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 def inicio(request):    
@@ -113,3 +115,21 @@ def solicitud_documentos(request):
     return render(request, 'solicitud_documentos.html', {'form': form})
 
 
+def register(request):
+    data = {
+        'form': CustomUserCreationForm()
+    }
+
+    if request.method == 'POST':
+        user_creation_form = CustomUserCreationForm(data=request.POST)
+
+        if user_creation_form.is_valid():
+            user_creation_form.save()
+
+            user = authenticate(username=user_creation_form.cleaned_data['username'], password=user_creation_form.cleaned_data['password1'])
+            login(request, user)
+            return redirect('home')
+        else:
+            data['form'] = user_creation_form
+
+    return render(request, 'registration/register.html', data)

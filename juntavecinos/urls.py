@@ -1,6 +1,7 @@
 from django.urls import include, path
 from . import views
 
+
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
 
@@ -25,7 +26,13 @@ urlpatterns = [
     path('juntas/editarproyecto/<int:id>', views.editarproyecto, name='editarproyecto'),
     path('eliminarproyecto/<int:id>', views.eliminarproyecto, name='eliminarproyecto'),
     
-    #CLAUDIO
-    path('solicitud_documentos', views.solicitud_documentos, name='solicitud_documentos'),
+    #CLAUDIO, Kevin
+    path('solicitud_documentos', views.solicitud_documentos, name='solicitud_documentos'),     
+   
+    path('register/', views.register, name='register'),
+
+
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)                 
+
+
