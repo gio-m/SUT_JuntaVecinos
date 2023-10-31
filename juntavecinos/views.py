@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import CreateView,DeleteView
 from django.http import HttpResponse
 from .models import Vecinos,Noticias,Propuesta,Proyectos,Actividades,Documentos
-from .forms import NoticiasForm, ActividadesForm, ProyectosForm, PropuestaForm, VecinosForm, DocumentosForm
+from .forms import NoticiasForm, ActividadesForm, ProyectosForm, PropuestaForm, VecinosForm, FormularioDocumentos
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
 # Create your views here.
@@ -103,16 +103,25 @@ def eliminarproyecto(request,id):
     return redirect('proyectos')
 
 #CLAUDIO
+
 def solicitud_documentos(request):
     if request.method == 'POST':
-        form = DocumentosForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Puedes redirigir a una página de confirmación o a donde desees.
-            return redirect('pagina_confirmacion')
+        formulariodocumentos = FormularioDocumentos(request.POST, request.FILES)
+        if formulariodocumentos.is_valid():
+        
+            formulariodocumentos.save()
+
+          
+            return redirect('juntas/solicitud_documentos.html')
+
     else:
-        form = DocumentosForm()
-    return render(request, 'solicitud_documentos.html', {'form': form})
+        formulariodocumentos = FormularioDocumentos()
+
+    context = {
+        'formulariodocumentos': formulariodocumentos,
+    }
+
+    return render(request, 'juntas/solicitud_documentos.html', context)
 
 
 def register(request):

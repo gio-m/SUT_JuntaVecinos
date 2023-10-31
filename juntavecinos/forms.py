@@ -37,11 +37,10 @@ class VecinosForm(forms.ModelForm):
         fields = '__all__'
         
 #CLAUDIO
-class DocumentosForm(forms.ModelForm):
+class FormularioDocumentos(forms.ModelForm):
     class Meta:
         model = Documentos
-        fields = ['NombreDocumento', 'DescripcionDocumento', 'Archivo']
-
+        fields = ['nombre', 'descripcion', 'imagen', 'fecha_documento']
 
 #Kevin
 class CustomUserCreationForm(UserCreationForm):

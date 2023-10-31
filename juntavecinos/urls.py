@@ -27,7 +27,7 @@ urlpatterns = [
     path('eliminarproyecto/<int:id>', views.eliminarproyecto, name='eliminarproyecto'),
     
     #CLAUDIO, Kevin
-    path('solicitud_documentos', views.solicitud_documentos, name='solicitud_documentos'),     
+    path('juntas/solicitud_documentos', views.solicitud_documentos, name='solicitud_documentos'),     
    
     path('register/', views.register, name='register'),
 

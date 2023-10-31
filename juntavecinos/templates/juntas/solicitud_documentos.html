@@ -1,18 +1,18 @@
 {% extends "base.html" %}   
 
-{% block titulo %} Solicita tu documentación {% endblock %}
+{% block titulo %} Lista de actividades {% endblock %}
 
 {% block contenido %} 
-
+<!DOCTYPE html>
 <html>
 <head>
-    
+    <title>Solicitud de Documentos</title>
 </head>
 <body>
-    <h1>Solicitud de Documentos</h1>
+    <h2>Solicitud de Documentos</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ formulariodocumentos.as_p }}
         <button type="submit">Enviar Solicitud</button>
     </form>
 </body>

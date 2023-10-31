@@ -122,9 +122,6 @@ class Documentos(models.Model):
     def __str__(self):
         return f"Documento: {self.NombreDocumento} ({self.TipoDocumento})"
 
-    def delete(self, using=None, keep_parents=False):
-        self.Archivo.storage.delete(self.Archivo.name)
-        super().delete()
 
 class Reuniones(models.Model):
     Reuniones_id = models.AutoField(primary_key=True)
