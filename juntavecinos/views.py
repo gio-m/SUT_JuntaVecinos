@@ -112,7 +112,7 @@ def solicitud_documentos(request):
             formulariodocumentos.save()
 
           
-            return redirect('juntas/solicitud_documentos.html')
+            return redirect('solicitud_documentos')
 
     else:
         formulariodocumentos = FormularioDocumentos()

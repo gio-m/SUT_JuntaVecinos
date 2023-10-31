@@ -111,13 +111,12 @@ class Propuesta(models.Model):
 #CLAUDIO
 ##Formato de base de datos para los documentos   
 
-class Documentos(models.Model):
-    id = models.AutoField(primary_key=True)
-    NombreDocumento = models.CharField(max_length=100, verbose_name="Nombre del Documento")
-    TipoDocumento = models.CharField(max_length=50, verbose_name="Tipo de Documento")
-    FechaPublicacion = models.DateField(verbose_name="Fecha de Publicación")
-    DescripcionDocumento = models.TextField(verbose_name="Descripción del Documento")
-    Archivo = models.FileField(upload_to='documents/', verbose_name="Archivo del Documento")
+class Documento(models.Model):
+    nombre_documento = models.CharField(max_length=255)
+    tipo_documento = models.CharField(max_length=255)
+    fecha_publicacion = models.DateField()
+    descripcion_documento = models.TextField()
+    archivo = models.FileField(upload_to='documentos/')
 
     def __str__(self):
         return f"Documento: {self.NombreDocumento} ({self.TipoDocumento})"
