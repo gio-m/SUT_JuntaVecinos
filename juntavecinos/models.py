@@ -122,17 +122,19 @@ class Documentos(models.Model):
     def __str__(self):
         return f"Documento: {self.NombreDocumento} ({self.TipoDocumento})"
 
+    def delete(self, using=None, keep_parents=False):
+        self.Archivo.storage.delete(self.Archivo.name)
+        super().delete()
 
-class Reuniones(models.Model):
-    Reuniones_id = models.AutoField(primary_key=True)
-    Fecha = models.DateField()
-    Lugar = models.CharField(max_length=100)
-    Asunto = models.CharField(max_length=100)
-    Descripcion_reuniones = models.TextField(max_length=500)
-    Proyecto_id = models.ForeignKey(Proyectos, on_delete=models.CASCADE)
+class Documentos(models.Model):
+    nombre_documento = models.CharField(max_length=100, verbose_name="Nombre del Documento")
+    tipo_documento = models.CharField(max_length=50, verbose_name="Tipo de Documento")
+    fecha_publicacion = models.DateField(verbose_name="Fecha de Publicación")
+    descripcion_documento = models.TextField(verbose_name="Descripción del Documento")
+    archivo = models.FileField(upload_to='documents/', verbose_name="Archivo del Documento")
 
     def __str__(self):
-        return self.Asunto
+        return f"Documento: {self.nombre_documento} ({self.tipo_documento})"
     
 
 class Notificaciones(models.Model):

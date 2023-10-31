@@ -40,8 +40,7 @@ class VecinosForm(forms.ModelForm):
 class FormularioDocumentos(forms.ModelForm):
     class Meta:
         model = Documentos
-        fields = ['nombre', 'descripcion', 'imagen', 'fecha_documento']
-
+        fields = ['nombre_documento', 'tipo_documento', 'fecha_publicacion', 'descripcion_documento', 'archivo']
 #Kevin
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
