@@ -37,14 +37,23 @@ class VecinosForm(forms.ModelForm):
         fields = '__all__'
         
 #CLAUDIO
+TIPO_DOCUMENTO_CHOICES = [
+    ("Certificado de residencia", "Certificado de residencia"),
+    ("Boleta", "Boleta"),
+]
+
 class FormularioDocumentos(forms.ModelForm):
+    tipo_documento = forms.ChoiceField(
+        choices=TIPO_DOCUMENTO_CHOICES,
+        label="Tipo de Documento",
+    )
+
     class Meta:
         model = Documentos
         fields = ['nombre_documento', 'tipo_documento', 'fecha_publicacion', 'descripcion_documento', 'archivo']
 
     def __init__(self, *args, **kwargs):
         super(FormularioDocumentos, self).__init__(*args, **kwargs)
-        
         
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
