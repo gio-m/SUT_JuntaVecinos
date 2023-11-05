@@ -130,7 +130,7 @@ class Documentos(models.Model):
     tipo_documento = models.CharField(max_length=50, verbose_name="Tipo de Documento")
     fecha_publicacion = models.DateField(verbose_name="Fecha de Publicación")
     descripcion_documento = models.TextField(verbose_name="Descripción del Documento")
-    archivo = models.FileField(upload_to='documents/', verbose_name="Archivo del Documento")
+    archivo = models.FileField(upload_to='documentos/', verbose_name="Archivo del Documento")
 
     def __str__(self):
         return f"Documento: {self.nombre_documento} ({self.tipo_documento})"

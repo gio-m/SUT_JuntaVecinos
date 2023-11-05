@@ -5,6 +5,7 @@ from .models import Vecinos,Noticias,Propuesta,Proyectos,Actividades,Documentos
 from .forms import NoticiasForm, ActividadesForm, ProyectosForm, PropuestaForm, VecinosForm, FormularioDocumentos
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
+
 # Create your views here.
 
 def inicio(request):    
@@ -105,13 +106,14 @@ def eliminarproyecto(request,id):
 #CLAUDIO
 
 def solicitud_documentos(request):
+    show_success_message = False  
+
     if request.method == 'POST':
         formulariodocumentos = FormularioDocumentos(request.POST, request.FILES)
         if formulariodocumentos.is_valid():
-        
             formulariodocumentos.save()
-
-          
+            show_success_message = True  
+            print("Formulario enviado con éxito")
             return redirect('solicitud_documentos')
 
     else:
@@ -119,10 +121,10 @@ def solicitud_documentos(request):
 
     context = {
         'formulariodocumentos': formulariodocumentos,
+        'show_success_message': show_success_message,  
     }
 
     return render(request, 'juntas/solicitud_documentos.html', context)
-
 
 def register(request):
     data = {

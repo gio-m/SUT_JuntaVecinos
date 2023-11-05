@@ -41,7 +41,11 @@ class FormularioDocumentos(forms.ModelForm):
     class Meta:
         model = Documentos
         fields = ['nombre_documento', 'tipo_documento', 'fecha_publicacion', 'descripcion_documento', 'archivo']
-#Kevin
+
+    def __init__(self, *args, **kwargs):
+        super(FormularioDocumentos, self).__init__(*args, **kwargs)
+        
+        
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
 
