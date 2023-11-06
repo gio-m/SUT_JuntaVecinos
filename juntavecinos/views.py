@@ -126,6 +126,12 @@ def solicitud_documentos(request):
 
     return render(request, 'juntas/solicitud_documentos.html', context)
 
+
+def mostrar_documentos(request):
+    documentos = Documentos.objects.all()
+    return render(request, 'juntas/mostrar_documentos.html', {'documentos': documentos})
+
+
 def register(request):
     data = {
         'form': CustomUserCreationForm()
