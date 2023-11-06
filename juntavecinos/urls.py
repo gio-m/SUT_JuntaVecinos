@@ -28,7 +28,7 @@ urlpatterns = [
     
     #CLAUDIO, Kevin
     path('juntas/solicitud_documentos', views.solicitud_documentos, name='solicitud_documentos'),     
-   
+    path('mostrar-documentos/', views.mostrar_documentos, name='mostrar_documentos'),
     path('register/', views.register, name='register'),
 
 

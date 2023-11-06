@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+            <h2>Documentos Solicitados</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre del Documento</th>
+                        <th>Tipo de Documento</th>
+                        <th>Fecha de Publicación</th>
+                        <th>Nombre del Usuario</th>
+                        <th>Correo Electrónico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for documento in documentos %}
+                        <tr>
+                            <td>{{ documento.nombre_documento }}</td>
+                            <td>{{ documento.get_tipo_documento_display }}</td>
+                            <td>{{ documento.fecha_publicacion|date:"d/m/Y" }}</td>
+                            <td>{{ documento.usuario.first_name }} {{ documento.usuario.last_name }}</td>
+                            <td>{{ documento.usuario.email }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
