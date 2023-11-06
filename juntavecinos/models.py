@@ -1,5 +1,10 @@
 from django.db import models
 from django.forms import PasswordInput
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+import pytz
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 # Create your models here.
 class TiposPerfil(models.Model):
@@ -115,15 +120,34 @@ class Propuesta(models.Model):
 
 class Documentos(models.Model):
     nombre_documento = models.CharField(max_length=100, verbose_name="Nombre del Documento")
-    tipo_documento = models.CharField(max_length=50, verbose_name="Tipo de Documento")
-    fecha_publicacion = models.DateField(verbose_name="Fecha de Publicación")
+
+    TIPO_DOCUMENTO_CHOICES = [
+        ("Certificado de residencia", "Certificado de residencia"),
+        ("Boleta", "Boleta"),
+    ]
+
+    tipo_documento = models.CharField(
+        max_length=50,
+        choices=TIPO_DOCUMENTO_CHOICES,
+        verbose_name="Tipo de Documento"
+    )
+
+    fecha_publicacion = models.DateTimeField(
+        verbose_name="Fecha de Publicación",
+        editable=False,  
+        
+    )
     descripcion_documento = models.TextField(verbose_name="Descripción del Documento")
     archivo = models.FileField(upload_to='documentos/', verbose_name="Archivo del Documento")
+    
+    def save(self, *args, **kwargs):
+        if not self.fecha_publicacion:
+            self.fecha_publicacion = timezone.now().astimezone(pytz.timezone("Chile/Continental"))
+        super(Documentos, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Documento: {self.nombre_documento} ({self.tipo_documento})"
+        return f"Documento: {self.nombre_documento} ({self.get_tipo_documento_display()})"
     
-
 class Notificaciones(models.Model):
     Notificaciones_id = models.AutoField(primary_key=True)
     Titulo_notificaciones = models.CharField(max_length=100)

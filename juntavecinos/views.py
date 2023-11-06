@@ -1,10 +1,14 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.views.generic import CreateView,DeleteView
 from django.http import HttpResponse
 from .models import Vecinos,Noticias,Propuesta,Proyectos,Actividades,Documentos
 from .forms import NoticiasForm, ActividadesForm, ProyectosForm, PropuestaForm, VecinosForm, FormularioDocumentos
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.utils import timezone
+import pytz
 
 # Create your views here.
 
@@ -105,31 +109,40 @@ def eliminarproyecto(request,id):
 
 #CLAUDIO
 
+@login_required
 def solicitud_documentos(request):
-    show_success_message = False  
+    show_success_message = False
 
     if request.method == 'POST':
         formulariodocumentos = FormularioDocumentos(request.POST, request.FILES)
         if formulariodocumentos.is_valid():
-            formulariodocumentos.save()
-            show_success_message = True  
+            usuario = request.user
+            documento = formulariodocumentos.save(commit=False)
+            documento.fecha_publicacion = timezone.now().astimezone(pytz.timezone("Chile/Continental"))
+            documento.usuario = usuario
+            documento.save()
+            show_success_message = True
             print("Formulario enviado con éxito")
             return redirect('solicitud_documentos')
-
     else:
         formulariodocumentos = FormularioDocumentos()
 
     context = {
         'formulariodocumentos': formulariodocumentos,
-        'show_success_message': show_success_message,  
+        'show_success_message': show_success_message,
     }
 
     return render(request, 'juntas/solicitud_documentos.html', context)
 
-
+@login_required
 def mostrar_documentos(request):
     documentos = Documentos.objects.all()
-    return render(request, 'juntas/mostrar_documentos.html', {'documentos': documentos})
+    
+    context = {
+        'documentos': documentos,
+    }
+
+    return render(request, 'juntas/mostrar_documentos.html', context)
 
 
 def register(request):

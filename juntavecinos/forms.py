@@ -4,6 +4,8 @@ from .models import Noticias, Actividades, Proyectos, Propuesta, Vecinos, Docume
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 class NoticiasForm(forms.ModelForm):
     class Meta:
@@ -38,10 +40,16 @@ class VecinosForm(forms.ModelForm):
         model = Vecinos
         fields = '__all__'
         
+        
 #CLAUDIO
+def validate_file_size(value):
+    filesize = value.size
+    if filesize > 20 * 1024 * 1024:  # 20 MB
+        raise ValidationError(_('El archivo no puede superar los 20 MB.'))
+
 class FormularioDocumentos(forms.ModelForm):
     TIPO_DOCUMENTO_CHOICES = [
-        ("", "Selecciona un tipo de documento"),
+        ("", "Seleccionar tipo de documento --"),  
         ("Certificado de residencia", "Certificado de residencia"),
         ("Boleta", "Boleta"),
     ]
@@ -49,19 +57,19 @@ class FormularioDocumentos(forms.ModelForm):
     tipo_documento = forms.ChoiceField(
         choices=TIPO_DOCUMENTO_CHOICES,
         label="Tipo de Documento",
-        initial="",
+        required=True,
     )
 
-    fecha_publicacion = forms.DateTimeField(
-        label="Fecha de Publicación",
-        initial=timezone.now().astimezone(pytz.timezone("Chile/Continental")).strftime("%d/%m/%Y %H:%M"),
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # Campo de solo lectura
-        input_formats=['%d/%m/%Y %H:%M'],
+    archivo = forms.FileField(
+        label="Archivo del Documento",
+        required=True,
+        help_text="Se permite un tamaño máximo de 20 MB.",
+        validators=[validate_file_size]  # Agrega la validación al campo archivo
     )
 
     class Meta:
         model = Documentos
-        fields = ['nombre_documento', 'tipo_documento', 'fecha_publicacion', 'descripcion_documento', 'archivo']
+        fields = ['nombre_documento', 'tipo_documento', 'descripcion_documento', 'archivo']
 
     def __init__(self, *args, **kwargs):
         super(FormularioDocumentos, self).__init__(*args, **kwargs)
@@ -71,7 +79,6 @@ class FormularioDocumentos(forms.ModelForm):
         if tipo_documento == "":
             raise forms.ValidationError("Debes seleccionar un tipo de documento")
         return tipo_documento
-        
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
 
