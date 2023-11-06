@@ -49,10 +49,13 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'solicitud_documentos' %}">Solicitar documentos</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'revisardocumentos' %}">Revisar solicitudes de documentos</a>
+          </li>
 
         </ul>
       </div>
-      <ul class="navbar-nav ml-auto"> <!-- Para alinear a la derecha -->
+      <ul class="navbar-nav ml-auto"> 
         {% if request.user.is_authenticated %}
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">@{{ user.username | upper }}</a></li>
         <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link link-dark px-2">Salir</a></li>
