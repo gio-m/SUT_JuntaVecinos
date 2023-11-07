@@ -11,13 +11,14 @@ from django.utils import timezone
 import pytz
 
 # Create your views here.
-
+@login_required
 def inicio(request):    
     return render(request, 'paginas/inicio.html')
+@login_required
 def nosotros(request):
     return render(request, 'paginas/nosotros.html')
 
-
+@login_required
 def crear(request):
     formularionoticia = NoticiasForm(request.POST or None, request.FILES or None)
     if formularionoticia.is_valid():
@@ -25,20 +26,22 @@ def crear(request):
         return redirect('crear')
     return render(request, 'juntas/crear.html', {'formularionoticia':formularionoticia})
 
-
+@login_required
 def index(request):
     noticias = Noticias.objects.all().order_by('id')
     print (Noticias)
     return render(request, 'juntas/index.html', {'noticias':noticias})
 
-
+@login_required
 def form(request):
     return render(request, 'juntas/form.html')
+@login_required
 def formularioactividad(request):
     return render(request, 'juntas/formularioactividad.html')
+@login_required
 def formularioproyecto(request):
     return render(request, 'juntas/formularioproyecto.html')
-
+@login_required
 def proyectos(request):
     formularioproyecto = ProyectosForm(request.POST or None, request.FILES or None)
     if formularioproyecto.is_valid():
@@ -46,33 +49,33 @@ def proyectos(request):
         return redirect('proyectos')
     return render(request, 'juntas/proyectos.html', {'formularioproyecto':formularioproyecto})
 
-
+@login_required
 def actividades(request):
     formularioactividad = ActividadesForm(request.POST or None, request.FILES or None)
     if formularioactividad.is_valid():
         formularioactividad.save()
         return redirect('actividades')
     return render(request, 'juntas/actividades.html', {'formularioactividad':formularioactividad})
-
+@login_required
 def revisaractividad(request):
     actividades = Actividades.objects.all().order_by('id')
     print (actividades)
     return render(request, 'juntas/revisaractividad.html', {'actividades':actividades})
-
+@login_required
 def revisarproyecto(request):
     proyectos = Proyectos.objects.all().order_by('id')
     print (proyectos)
     return render(request, 'juntas/revisarproyecto.html', {'proyectos':proyectos})
 
-
+@login_required
 def iniciojunta(request):    
     return render(request, 'juntas/iniciojunta.html')   
-
+@login_required
 def eliminarnoticia(request,id):
     noticias = Noticias.objects.get(id=id)
     noticias.delete()
     return redirect('crear')
-
+@login_required
 def editarnoticia(request,id):
     noticias = Noticias.objects.get(id=id)
     formularionoticia = NoticiasForm(request.POST or None, request.FILES or None, instance=noticias)
@@ -80,12 +83,12 @@ def editarnoticia(request,id):
         formularionoticia.save()
         return redirect('crear') 
     return render(request,'juntas/editarnoticia.html',{'formularionoticia':formularionoticia})
-
+@login_required
 def eliminaractividad(request,id):
     actividades = Actividades.objects.get(id=id)
     actividades.delete()
     return redirect('actividades')
-
+@login_required
 def editaractividad(request,id):
     actividades = Actividades.objects.get(id=id)
     formularioactividad = ActividadesForm(request.POST or None, request.FILES or None, instance=actividades)
@@ -93,7 +96,7 @@ def editaractividad(request,id):
         formularioactividad.save()
         return redirect('actividades') 
     return render(request,'juntas/editaractividad.html',{'formularioactividad':formularioactividad})
-
+@login_required
 def editarproyecto(request,id):
     proyectos = Proyectos.objects.get(id=id)
     formularioproyecto = ProyectosForm(request.POST or None, request.FILES or None, instance=proyectos)
@@ -101,7 +104,7 @@ def editarproyecto(request,id):
         formularioproyecto.save()
         return redirect('proyectos') 
     return render(request,'juntas/editarproyecto.html',{'formularioproyecto':formularioproyecto})
-
+@login_required
 def eliminarproyecto(request,id):
     proyectos = Proyectos.objects.get(id=id)
     proyectos.delete()
@@ -144,7 +147,7 @@ def mostrar_documentos(request):
 
     return render(request, 'juntas/mostrar_documentos.html', context)
 
-
+@login_required
 def register(request):
     data = {
         'form': CustomUserCreationForm()
