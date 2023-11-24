@@ -31,7 +31,7 @@ def crear(request):
 @login_required
 def index(request):
     noticias = Noticias.objects.all().order_by('id')
-    print (Noticias)
+    print (f"Noticias")
     return render(request, 'juntas/index.html', {'noticias':noticias})
 
 @login_required
@@ -65,13 +65,13 @@ def actividades(request):
 @login_required
 def revisaractividad(request):
     actividades = Actividades.objects.all().order_by('id')
-    print (actividades)
+    print (f"actividades")
     return render(request, 'juntas/revisaractividad.html', {'actividades':actividades})
     
 @login_required
 def revisarproyecto(request):
     proyectos = Proyectos.objects.all().order_by('id')
-    print (proyectos)
+    print (f"proyectos")
     return render(request, 'juntas/revisarproyecto.html', {'proyectos':proyectos})
 
 @login_required

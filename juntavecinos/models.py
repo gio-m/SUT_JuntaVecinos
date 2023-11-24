@@ -59,15 +59,23 @@ class Certificados(models.Model):
     
 ##Formato de base de datos para las noticias
 class Noticias(models.Model):
+    opciones_noticias =[
+                        ['Seguridad', 'Seguridad'],
+                        ['Programas educativos', 'Programas educativos'],
+                        ['Eventos', 'Eventos'],
+                        ['Mejoras de infraestructura', 'Mejoras de infraestructura'],
+                        ['Comités de vecinos', 'Comités de vecinos'],
+                        ['Otros', 'Otros'] 
+                    ] 
     id = models.AutoField(primary_key=True)
     Titulo = models.CharField(max_length=100,verbose_name="Titulo")
-    Tipo = models.CharField(max_length=100,verbose_name="Tipo de noticia")
+    Tipo = models.CharField(max_length=100,choices=opciones_noticias, verbose_name="Tipo de noticia")
     Descripcion = models.TextField(verbose_name="Descripcion")
     Fecha = models.DateField(verbose_name="Fecha de publicación")
     Imagen = models.ImageField(upload_to='images/noticias/', verbose_name="Imagen")
 
     def __str__(self):
-        fila = "Titulo: " + self.Titulo + '-' +"Descripcion : " + self.Descripcion + '-' +"Tipo de noticia: " + self.Tipo + '-' +"Fecha de publicacion: " + self.Fecha 
+        fila = "Titulo: " + self.Titulo + '-' +"Descripcion : " + self.Descripcion + '-' +"Tipo de noticia: " + self.get_Tipo_display() + '-' +"Fecha de publicacion: " + self.Fecha 
         return fila
     def delete(self, using=None,keep_parents=False):
         self.Imagen.storage.delete(self.Imagen.name)
@@ -76,28 +84,44 @@ class Noticias(models.Model):
 
 ##Formato de base de datos para las proyectos
 class Proyectos(models.Model):
+    opciones_proyectos =[
+                        ['Seguridad', 'Seguridad'],
+                        ['Programas educativos', 'Programas educativos'],
+                        ['Eventos', 'Eventos'],
+                        ['Mejoras de infraestructura', 'Mejoras de infraestructura'],
+                        ['Comités de vecinos', 'Comités de vecinos'],
+                        ['Otros', 'Otros'] 
+                    ] 
     id = models.AutoField(primary_key=True)
-    TipoProyecto = models.CharField(max_length=100,verbose_name="Tipo de proyecto")
+    TipoProyecto = models.CharField(max_length=100,choices=opciones_proyectos,verbose_name="Tipo de proyecto")
     Descripcion = models.TextField(verbose_name="Descripcion")
     Imagen = models.ImageField(upload_to='images/proyectos/', verbose_name="Imagen")
 
     def __str__(self):
-        fila = "Tipo de proyecto: " + self.TipoProyecto + '-' +"Descripcion : " + self.Descripcion
-        return fila
+        fila = "Tipo de proyecto: " + self.get_TipoProyecto_display() + '-' +"Descripcion : " + self.Descripcion
+        return f"{fila}"
     def delete(self, using=None,keep_parents=False):
         self.Imagen.storage.delete(self.Imagen.name)
         super().delete()
 
 ##Formato de base de datos para las actividades
 class Actividades(models.Model):
+    opciones_actividades =[
+                        ['Eventos', 'Eventos'],
+                        ['Programas educativos', 'Programas educativos'],
+                        ['Deportes', 'Deportes'],
+                        ['Concursos', 'Concursos'],
+                        ['Comités de vecinos', 'Comités de vecinos'],
+                        ['Otros', 'Otros'] 
+                    ] 
     id = models.AutoField(primary_key=True)
-    TipoSolicitud = models.CharField(max_length=100,verbose_name="Tipo de solicitud")
+    TipoSolicitud = models.CharField(max_length=100,choices=opciones_actividades, verbose_name="Tipo de Actividad")
     Descripcion = models.TextField(verbose_name="Descripcion")
     Imagen = models.ImageField(upload_to='images/actividades/', verbose_name="Imagen")
     fecha_actividad = models.DateField(verbose_name="Fecha de actividad")
     def __str__(self):
-        fila = "Tipo de solicitud: " + self.TipoSolicitud + '-' +"Descripcion : " + self.Descripcion
-        return fila
+        fila = "Tipo de solicitud: " + self.get_TipoSolicitud_display() + '-' +"Descripcion : " + self.Descripcion
+        return f"{fila}"
     def delete(self, using=None,keep_parents=False):
         self.Imagen.storage.delete(self.Imagen.name)
         super().delete()
@@ -105,15 +129,22 @@ class Actividades(models.Model):
 
 ##Formato de base de datos para las propuestas
 class Propuesta(models.Model):
+    opciones_proyectos =[
+                        ['Seguridad', 'Seguridad'],
+                        ['Mejora de calles', 'Mejora de calles'],
+                        ['Eventos', 'Eventos'],
+                        ['Mejoras de infraestructura', 'Mejoras de infraestructura'],
+                        ['Concursos', 'Concursos'],
+                        ['Otros', 'Otros'] 
+                    ] 
     id = models.AutoField(primary_key=True)
-    TipoSolicitud = models.CharField(max_length=100,verbose_name="Tipo de solicitud")
+    TipoSolicitud = models.CharField(max_length=100,choices=opciones_proyectos, verbose_name="Tipo de propuesta")
     Descripcion = models.TextField(verbose_name="Descripcion")
     def __str__(self):
-        fila = "Tipo de solicitud: " + self.TipoSolicitud + '-' +"Descripcion : " + self.Descripcion
-        return fila
+        fila = "Tipo de solicitud: " + self.get_TipoSolicitud_display() + '-' +"Descripcion : " + self.Descripcion
+        return f"{fila}"
     def delete(self, using=None,keep_parents=False):
         super().delete()
-
 #CLAUDIO
 ##Formato de base de datos para los documentos   
 
