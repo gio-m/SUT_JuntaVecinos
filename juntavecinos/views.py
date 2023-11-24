@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.utils import timezone
 import pytz
+from django.contrib import messages
 
 # Create your views here.
 @login_required
@@ -119,14 +120,33 @@ def solicitud_documentos(request):
     if request.method == 'POST':
         formulariodocumentos = FormularioDocumentos(request.POST, request.FILES)
         if formulariodocumentos.is_valid():
-            usuario = request.user
             documento = formulariodocumentos.save(commit=False)
             documento.fecha_publicacion = timezone.now().astimezone(pytz.timezone("Chile/Continental"))
-            documento.usuario = usuario
-            documento.save()
-            show_success_message = True
-            print("Formulario enviado con éxito")
-            return redirect('solicitud_documentos')
+
+            if request.user.is_authenticated:
+                documento.usuario = request.user  
+                documento.save()
+                show_success_message = True
+                print("Formulario enviado con éxito")
+                return redirect('solicitud_documentos')
+            else:
+           
+                error_message = "Debes iniciar sesión para enviar la solicitud."
+                context = {
+                    'formulariodocumentos': formulariodocumentos,
+                    'show_success_message': show_success_message,
+                    'error_message': error_message,
+                }
+                return render(request, 'juntas/solicitud_documentos.html', context)
+        else:
+           
+            error_message = "Por favor, corrige los errores en el formulario."
+            context = {
+                'formulariodocumentos': formulariodocumentos,
+                'show_success_message': show_success_message,
+                'error_message': error_message,
+            }
+            return render(request, 'juntas/solicitud_documentos.html', context)
     else:
         formulariodocumentos = FormularioDocumentos()
 
@@ -140,18 +160,19 @@ def solicitud_documentos(request):
 @login_required
 def mostrar_documentos(request):
     documentos = Documentos.objects.all()
-    
+
     context = {
         'documentos': documentos,
     }
 
     return render(request, 'juntas/mostrar_documentos.html', context)
 
-@login_required
 def register(request):
     data = {
         'form': CustomUserCreationForm()
     }
+
+    user_creation_form = None 
 
     if request.method == 'POST':
         user_creation_form = CustomUserCreationForm(data=request.POST)

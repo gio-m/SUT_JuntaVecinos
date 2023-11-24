@@ -5,6 +5,7 @@ from django.utils import timezone
 import pytz
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 # Create your models here.
 class TiposPerfil(models.Model):
@@ -118,8 +119,9 @@ class Propuesta(models.Model):
 
 
 
-class Documentos(models.Model):
+class Documentos (models.Model):
     nombre_documento = models.CharField(max_length=100, verbose_name="Nombre del Documento")
+    
 
     TIPO_DOCUMENTO_CHOICES = [
         ("Certificado de residencia", "Certificado de residencia"),
@@ -135,11 +137,20 @@ class Documentos(models.Model):
     fecha_publicacion = models.DateTimeField(
         verbose_name="Fecha de Publicación",
         editable=False,  
-        
-    )
+        )
+    
+   
+    
     descripcion_documento = models.TextField(verbose_name="Descripción del Documento")
     archivo = models.FileField(upload_to='documentos/', verbose_name="Archivo del Documento")
     
+    def save(self, *args, **kwargs):
+        if not self.fecha_publicacion:
+            self.fecha_publicacion = timezone.now().astimezone(pytz.timezone("Chile/Continental"))
+        super(Documentos, self).save(*args, **kwargs)
+        
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
     def save(self, *args, **kwargs):
         if not self.fecha_publicacion:
             self.fecha_publicacion = timezone.now().astimezone(pytz.timezone("Chile/Continental"))

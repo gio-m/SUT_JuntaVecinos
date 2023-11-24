@@ -23,7 +23,7 @@
                             </strong> {{ documento.fecha_publicacion|date:"d/m/Y H:i" }}
                         </div>
                         <div class="detalle-item">
-                            <strong>Nombre del Usuario:</strong> {{ documento.usuario.first_name }} {{ documento.usuario.last_name }}
+                            <strong>Nombre del Usuario:</strong> {{ documento.usuario.username}}
                         </div>
                         <div class="detalle-item">
                             <strong>Correo Electrónico:</strong> {{ documento.usuario.email }}

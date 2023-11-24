@@ -44,7 +44,7 @@ class VecinosForm(forms.ModelForm):
 #CLAUDIO
 def validate_file_size(value):
     filesize = value.size
-    if filesize > 20 * 1024 * 1024:  # 20 MB
+    if filesize > 20 * 1024 * 1024:  
         raise ValidationError(_('El archivo no puede superar los 20 MB.'))
 
 class FormularioDocumentos(forms.ModelForm):
@@ -64,7 +64,7 @@ class FormularioDocumentos(forms.ModelForm):
         label="Archivo del Documento",
         required=True,
         help_text="Se permite un tamaño máximo de 20 MB.",
-        validators=[validate_file_size]  # Agrega la validación al campo archivo
+        validators=[validate_file_size] 
     )
 
     class Meta:
@@ -79,6 +79,7 @@ class FormularioDocumentos(forms.ModelForm):
         if tipo_documento == "":
             raise forms.ValidationError("Debes seleccionar un tipo de documento")
         return tipo_documento
+    
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
 
