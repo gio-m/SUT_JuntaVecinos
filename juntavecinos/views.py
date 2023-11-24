@@ -15,6 +15,7 @@ from django.contrib import messages
 @login_required
 def inicio(request):    
     return render(request, 'paginas/inicio.html')
+
 @login_required
 def nosotros(request):
     return render(request, 'paginas/nosotros.html')
@@ -36,12 +37,15 @@ def index(request):
 @login_required
 def form(request):
     return render(request, 'juntas/form.html')
+    
 @login_required
 def formularioactividad(request):
     return render(request, 'juntas/formularioactividad.html')
+    
 @login_required
 def formularioproyecto(request):
     return render(request, 'juntas/formularioproyecto.html')
+    
 @login_required
 def proyectos(request):
     formularioproyecto = ProyectosForm(request.POST or None, request.FILES or None)
@@ -57,11 +61,13 @@ def actividades(request):
         formularioactividad.save()
         return redirect('actividades')
     return render(request, 'juntas/actividades.html', {'formularioactividad':formularioactividad})
+
 @login_required
 def revisaractividad(request):
     actividades = Actividades.objects.all().order_by('id')
     print (actividades)
     return render(request, 'juntas/revisaractividad.html', {'actividades':actividades})
+    
 @login_required
 def revisarproyecto(request):
     proyectos = Proyectos.objects.all().order_by('id')
@@ -71,11 +77,13 @@ def revisarproyecto(request):
 @login_required
 def iniciojunta(request):    
     return render(request, 'juntas/iniciojunta.html')   
+    
 @login_required
 def eliminarnoticia(request,id):
     noticias = Noticias.objects.get(id=id)
     noticias.delete()
     return redirect('crear')
+    
 @login_required
 def editarnoticia(request,id):
     noticias = Noticias.objects.get(id=id)
@@ -84,11 +92,13 @@ def editarnoticia(request,id):
         formularionoticia.save()
         return redirect('crear') 
     return render(request,'juntas/editarnoticia.html',{'formularionoticia':formularionoticia})
+
 @login_required
 def eliminaractividad(request,id):
     actividades = Actividades.objects.get(id=id)
     actividades.delete()
     return redirect('actividades')
+    
 @login_required
 def editaractividad(request,id):
     actividades = Actividades.objects.get(id=id)
@@ -97,6 +107,7 @@ def editaractividad(request,id):
         formularioactividad.save()
         return redirect('actividades') 
     return render(request,'juntas/editaractividad.html',{'formularioactividad':formularioactividad})
+    
 @login_required
 def editarproyecto(request,id):
     proyectos = Proyectos.objects.get(id=id)
@@ -105,6 +116,7 @@ def editarproyecto(request,id):
         formularioproyecto.save()
         return redirect('proyectos') 
     return render(request,'juntas/editarproyecto.html',{'formularioproyecto':formularioproyecto})
+    
 @login_required
 def eliminarproyecto(request,id):
     proyectos = Proyectos.objects.get(id=id)
@@ -112,7 +124,6 @@ def eliminarproyecto(request,id):
     return redirect('proyectos')
 
 #CLAUDIO
-
 @login_required
 def solicitud_documentos(request):
     show_success_message = False
