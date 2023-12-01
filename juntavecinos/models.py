@@ -173,7 +173,7 @@ class Documentos (models.Model):
    
     
     descripcion_documento = models.TextField(verbose_name="Descripción del Documento")
-    archivo = models.FileField(upload_to='documentos/', verbose_name="Archivo del Documento")
+    archivo = models.FileField(upload_to='documentos/', verbose_name="Agrega algún documento o boleta que compruebe tu identidad")
     
     def save(self, *args, **kwargs):
         if not self.fecha_publicacion:

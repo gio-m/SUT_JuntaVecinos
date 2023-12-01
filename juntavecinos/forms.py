@@ -61,7 +61,7 @@ class FormularioDocumentos(forms.ModelForm):
     )
 
     archivo = forms.FileField(
-        label="Archivo del Documento",
+        label="Agrega algún documento o boleta que compruebe tu identidad",
         required=True,
         help_text="Se permite un tamaño máximo de 20 MB.",
         validators=[validate_file_size] 
